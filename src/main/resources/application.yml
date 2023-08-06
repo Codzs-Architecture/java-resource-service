@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: java-resource-service
+
+  security:
+#    user:
+#      name: resource-service-user
+#      password: password
+#      roles: MANAGEMENT_ADMIN
+
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://local.codzs.com:5003
+
+  boot:
+    admin:
+      client:
+        instance:
+          management-base-url: https://local.codzs.com:9002
+
+  profiles:
+    include: keystore,config-service
+
+# Entry to show this information on spring boot admin
+#info:
+#  app:
+#    encoding: @project.build.sourceEncoding@
+#    java:
+#      source: @java.version@
+#      target: @java.version@
+
+management:
+  server:
+    port: 9002
+
+server:
+  port: 8002

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.codzs</groupId>
+		<artifactId>java-codzs-framework</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<groupId>com.codzs</groupId>
+	<artifactId>java-resource-service</artifactId>
+	<name>java-resource-service</name>
+	<description>Java resouce service sample project for Spring Boot</description>
+
+	<properties>
+		<skip.integration.tests>false</skip.integration.tests>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.codzs</groupId>
+			<artifactId>admin-client-service</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.codzs</groupId>
+			<artifactId>config-client-service</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.codzs</groupId>
+			<artifactId>resource-service</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+							<goal>build-info</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>com.codzs.Application</mainClass>
+					<addResources>false</addResources>
+				</configuration>
+			</plugin>
+
+			<!-- Start| Spring Client Config: Dependencies -->
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-compiler-plugin</artifactId>-->
+<!--				<configuration>-->
+<!--					<annotationProcessorPaths>-->
+<!--						<path>-->
+<!--							<groupId>com.github.therapi</groupId>-->
+<!--							<artifactId>therapi-runtime-javadoc-scribe</artifactId>-->
+<!--							<version>0.15.0</version>-->
+<!--						</path>-->
+<!--					</annotationProcessorPaths>-->
+<!--				</configuration>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>pre-integration-test</id>-->
+<!--						<goals>-->
+<!--							<goal>testCompile</goal>-->
+<!--						</goals>-->
+<!--						<configuration>-->
+<!--							<skip>${skip.integration.tests}</skip>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+<!--					<execution>-->
+<!--						<id>post-integration-test</id>-->
+<!--						<goals>-->
+<!--							<goal>testCompile</goal>-->
+<!--						</goals>-->
+<!--						<configuration>-->
+<!--							<skip>${skip.integration.tests}</skip>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-failsafe-plugin</artifactId>-->
+<!--				<configuration>-->
+<!--					<classesDirectory>${project.build.outputDirectory}</classesDirectory>-->
+<!--					<skip>${skip.integration.tests}</skip>-->
+<!--					&lt;!&ndash;					<systemPropertyVariables>&ndash;&gt;-->
+<!--					&lt;!&ndash;						<test.server.port>8080</test.server.port>&ndash;&gt;-->
+<!--					&lt;!&ndash;					</systemPropertyVariables>&ndash;&gt;-->
+<!--				</configuration>-->
+<!--			</plugin>-->
+<!--			&lt;!&ndash; End| Spring Client Config: Dependencies &ndash;&gt;-->
+
+<!--			&lt;!&ndash; Start| Spring Build Tool: Dependencies &ndash;&gt;-->
+<!--			<plugin>-->
+<!--				<groupId>org.codehaus.mojo</groupId>-->
+<!--				<artifactId>flatten-maven-plugin</artifactId>-->
+<!--				<version>1.5.0</version>-->
+<!--			</plugin>-->
+		</plugins>
+	</build>
+
+</project>
