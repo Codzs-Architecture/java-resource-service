@@ -8,16 +8,6 @@ spring:
 #      password: password
 #      roles: MANAGEMENT_ADMIN
 
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: https://local.codzs.com:5003
-
-  boot:
-    admin:
-      client:
-        instance:
-          management-base-url: https://local.codzs.com:9002
 
   profiles:
     include: keystore,config-service
