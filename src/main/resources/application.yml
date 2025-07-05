@@ -3,14 +3,28 @@ spring:
     name: java-resource-service
 
   security:
-#    user:
-#      name: resource-service-user
-#      password: password
-#      roles: MANAGEMENT_ADMIN
+   user:
+     name: resource-service-user
+     password: ${resource.server.secret}
+     roles: MANAGEMENT_ADMIN
+
+  # Spring WebMVC configuration to handle exception conflicts
+  mvc:
+    problemdetails:
+      enabled: false
 
 
   profiles:
     include: keystore,config-service
+
+# Logging configuration to suppress specific warnings
+logging:
+  level:
+    org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: ERROR
+    org.springframework.web.method.HandlerMethodMappingNamingStrategy: ERROR
+    de.codecentric.boot.admin: ERROR
+    org.springframework.boot.actuate: ERROR
+    org.springframework.web.client: DEBUG
 
 # Entry to show this information on spring boot admin
 #info:
@@ -23,6 +37,13 @@ spring:
 management:
   server:
     port: 9002
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
 
 server:
   port: 8002

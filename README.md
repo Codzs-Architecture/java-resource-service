@@ -48,12 +48,7 @@ Make sure you have the following installed:
     ```
 6.  Run the Config Server:
     ```
-    java -jar target/java-resource-service.jar 
-    -Dspring.profiles.active=local
-    -Dconfig.password=password
-    -Dconfig.server.url=https://local.codzs.com:5002
-    -Dserver.ssl.keystore=./../java-codzs-resource/local/local.codzs.com.p12
-    -Dserver.ssl.password=localpassword
+    java -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=7002 -Dspring.profiles.active=local -Dconfig.password=password -Dconfig.server.url=https://local.codzs.com:5002 -Dserver.ssl.keystore=./../java-codzs-resource/local/local.codzs.com.p12 -Dserver.ssl.password=localpassword -jar target/java-resource-service.jar 
     ```
     * `spring.profiles.active`: current active profile as per the environment
     * `config.server.url`: Config server base URL
