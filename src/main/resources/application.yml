@@ -3,16 +3,15 @@ spring:
     name: java-resource-service
 
   security:
-   user:
-     name: resource-service-user
-     password: ${resource.server.secret}
-     roles: MANAGEMENT_ADMIN
-
-  # Spring WebMVC configuration to handle exception conflicts
-  mvc:
-    problemdetails:
-      enabled: false
-
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${authorization.server.url}/oauth2/jwks
+          # issuer-uri: ${authorization.server.url}
+    user:
+      name: resource-service-user
+      password: ${resource.server.secret}
+      roles: MANAGEMENT_ADMIN
 
   profiles:
     include: keystore,config-service
@@ -20,11 +19,15 @@ spring:
 # Logging configuration to suppress specific warnings
 logging:
   level:
+    root: INFO
     org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: ERROR
     org.springframework.web.method.HandlerMethodMappingNamingStrategy: ERROR
     de.codecentric.boot.admin: ERROR
     org.springframework.boot.actuate: ERROR
     org.springframework.web.client: DEBUG
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.springframework.security.oauth2: INFO
 
 # Entry to show this information on spring boot admin
 #info:

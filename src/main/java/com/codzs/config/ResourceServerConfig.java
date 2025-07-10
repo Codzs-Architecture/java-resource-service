@@ -1,0 +1,46 @@
+package com.codzs.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+
+/**
+ * @author Joe Grandja
+ * @since 0.0.1
+ */
+@EnableWebSecurity
+@Configuration(proxyBeanMethods = false)
+public class ResourceServerConfig {
+
+	@Bean
+    @Order(1)
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http
+			.securityMatcher("/messages/**")
+				.authorizeHttpRequests(authorize ->
+						authorize.requestMatchers("/messages/**").hasAuthority("SCOPE_message.read")
+				)
+				.oauth2ResourceServer(oauth2ResourceServer ->
+						oauth2ResourceServer.jwt(Customizer.withDefaults())
+				);
+		return http.build();
+	}
+
+    @Bean
+    @Order(2)
+    public SecurityFilterChain managementSecurityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .securityMatcher("/management/**", "/actuator/**")
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/management/**", "/actuator/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .csrf(csrf -> csrf.disable());
+
+        return http.build();
+    }
+}

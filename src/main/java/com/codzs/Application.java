@@ -11,7 +11,9 @@ import org.springframework.context.annotation.FilterType;
     pattern = "com\\.codzs\\.exception\\.advice\\.RestResponseEntityExceptionHandler"
 ))
 public class Application {
+
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
+
 }
