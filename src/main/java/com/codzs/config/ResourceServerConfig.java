@@ -36,9 +36,11 @@ public class ResourceServerConfig {
         http
                 .securityMatcher("/management/**", "/actuator/**")
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/management/**", "/actuator/**").permitAll()
+                        .requestMatchers("/actuator/health", "/actuator/info").permitAll()  // Only health and info are public
+                        .requestMatchers("/management/**", "/actuator/**").authenticated()  // All other endpoints require authentication
                         .anyRequest().authenticated()
                 )
+                .httpBasic(Customizer.withDefaults())  // Enable HTTP Basic Auth for management endpoints
                 .csrf(csrf -> csrf.disable());
 
         return http.build();

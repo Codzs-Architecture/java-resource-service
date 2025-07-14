@@ -43,10 +43,13 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: "health,info"  # Only expose safe endpoints
+        exclude: "*"  # Exclude all by default
   endpoint:
     health:
-      show-details: always
+      show-details: when-authorized  # Only show details to authenticated users
+    shutdown:
+      enabled: false  # Disable dangerous endpoints
 
 server:
   port: 8002
