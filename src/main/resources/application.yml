@@ -7,7 +7,7 @@ spring:
       resourceserver:
         jwt:
           jwk-set-uri: ${authorization.server.url}/oauth2/jwks
-          # issuer-uri: ${authorization.server.url}
+          issuer-uri: ${authorization.server.url}
     user:
       name: resource-service-user
       password: ${resource.server.secret}

@@ -6,7 +6,11 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.oauth2.server.resource.web.BearerTokenResolver;
+import org.springframework.security.oauth2.server.resource.web.DefaultBearerTokenResolver;
 import org.springframework.security.web.SecurityFilterChain;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author Joe Grandja
@@ -20,13 +24,12 @@ public class ResourceServerConfig {
     @Order(1)
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
-			.securityMatcher("/messages/**")
-				.authorizeHttpRequests(authorize ->
-						authorize.requestMatchers("/messages/**").hasAuthority("SCOPE_message.read")
+			.securityMatcher("/messages/**", "/user/messages")
+				.authorizeHttpRequests(authorize -> authorize
+					.requestMatchers("/messages/**").hasAuthority("SCOPE_message.read")
+					.requestMatchers("/user/messages").hasAuthority("SCOPE_user.read")
 				)
-				.oauth2ResourceServer(oauth2ResourceServer ->
-						oauth2ResourceServer.jwt(Customizer.withDefaults())
-				);
+				.oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer.jwt(Customizer.withDefaults()));
 		return http.build();
 	}
 
