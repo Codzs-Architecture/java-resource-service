@@ -41,9 +41,13 @@ public class CertificateBoundTokenValidator implements OAuth2TokenValidator<Jwt>
         // Get certificate from current request
         X509Certificate certificate = getCurrentRequestCertificate();
         if (certificate == null) {
+            System.err.println("Certificate-bound token validation failed: No client certificate found in request");
             return OAuth2TokenValidatorResult.failure(
                 new OAuth2Error("invalid_token", "Certificate-bound token requires client certificate", null));
         }
+        
+        System.out.println("Certificate-bound token validation: Found client certificate with subject: " 
+            + certificate.getSubjectX500Principal().getName());
 
         // Calculate thumbprint of presented certificate
         String actualThumbprint = calculateThumbprint(certificate);
@@ -54,10 +58,12 @@ public class CertificateBoundTokenValidator implements OAuth2TokenValidator<Jwt>
 
         // Verify thumbprints match
         if (!expectedThumbprint.equals(actualThumbprint)) {
+            System.err.println("Certificate thumbprint mismatch - Expected: " + expectedThumbprint + ", Actual: " + actualThumbprint);
             return OAuth2TokenValidatorResult.failure(
                 new OAuth2Error("invalid_token", "Certificate thumbprint mismatch", null));
         }
 
+        System.out.println("Certificate-bound token validation successful - thumbprints match: " + actualThumbprint);
         return OAuth2TokenValidatorResult.success();
     }
 
