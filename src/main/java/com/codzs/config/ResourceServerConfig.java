@@ -53,11 +53,12 @@ public class ResourceServerConfig {
 	}
 
 	@Bean
-    @Order(1)
+	@Order(1)
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 			.securityMatcher("/messages/**", "/user/messages")
 				.authorizeHttpRequests(authorize -> authorize
+					.requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
 					.requestMatchers("/messages/**").hasAuthority("SCOPE_message.read")
 					.requestMatchers("/user/messages").hasAuthority("SCOPE_user.read")
 				)
@@ -71,6 +72,7 @@ public class ResourceServerConfig {
         http
                 .securityMatcher("/management/**", "/actuator/**")
                 .authorizeHttpRequests(authz -> authz
+												.requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
                         .requestMatchers("/actuator/health", "/actuator/info").permitAll()  // Only health and info are public
                         .requestMatchers("/management/**", "/actuator/**").authenticated()  // All other endpoints require authentication
                         .anyRequest().authenticated()
