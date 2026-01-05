@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: java-resource-service
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${authorization.server.url}/oauth2/jwks
+          issuer-uri: ${authorization.server.url}
+    user:
+      name: resource-service-user
+      password: ${resource.server.secret}
+      roles: MANAGEMENT_ADMIN
+
+  profiles:
+    include: keystore,config-service
+
+# Logging configuration to suppress specific warnings
+logging:
+  level:
+    root: INFO
+    org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: ERROR
+    org.springframework.web.method.HandlerMethodMappingNamingStrategy: ERROR
+    de.codecentric.boot.admin: ERROR
+    org.springframework.boot.actuate: ERROR
+    org.springframework.web.client: DEBUG
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.springframework.security.oauth2: INFO
+
+# Entry to show this information on spring boot admin
+#info:
+#  app:
+#    encoding: @project.build.sourceEncoding@
+#    java:
+#      source: @java.version@
+#      target: @java.version@
+
+management:
+  server:
+    port: 9002
+  endpoints:
+    web:
+      exposure:
+        include: "health,info"  # Only expose safe endpoints
+        exclude: "*"  # Exclude all by default
+  endpoint:
+    health:
+      show-details: when-authorized  # Only show details to authenticated users
+    shutdown:
+      enabled: false  # Disable dangerous endpoints
+
+server:
+  port: 8002
